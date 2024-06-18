@@ -24,7 +24,7 @@ export default class HomePage {
     {
         await this.newOrderButton.click();
     }
-z
+
     async cleanAllOrders()
     {
         if(await this.closeAllOrdersButton.isEnabled())
