@@ -37,7 +37,7 @@ export default defineConfig({
       name: 'chromium',
       use: { 
         ...devices['Desktop Chrome'],
-        hasTouch: false,
+        headless: false,
         baseURL: 'https://app.ctrader.com/'
       },
       
