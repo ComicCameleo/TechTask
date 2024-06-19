@@ -2,17 +2,23 @@ import { test as base } from '@playwright/test';
 import HomePage from '../pages/home.page'
 import NewMarketOrderPopUp from '../pages/newMarketOrder.popup'
 import SignUpPopUp from '../pages/signup.popup'
+import AccountPanel from '../pages/account.panel'
 
 type BasePages = {
   homePage: HomePage;
   newMarketOrderPopUp: NewMarketOrderPopUp;
   signUpPopUp: SignUpPopUp;
+  accountPanel: AccountPanel;
 };
 
 export const test = base.extend<BasePages>({
     homePage: async ({ page }, use) => {
     const homePage = new HomePage(page);
     await use(homePage);
+  },
+  accountPanel: async ({ page }, use) => {
+    const accountPanel = new AccountPanel(page);
+    await use(accountPanel);
   },
   newMarketOrderPopUp: async ({ page }, use) => {
     const newMarketOrderPopUp = new NewMarketOrderPopUp(page);
@@ -41,11 +47,11 @@ export const loggedInTest = test.extend<DefaultUser>({
         option: true,
       },
     ],
-    homePage: async ({ homePage, signUpPopUp, defaultUser, page }, use) => {
+    homePage: async ({ accountPanel, homePage, signUpPopUp, defaultUser, page }, use) => {
       await page.goto("");
-      await homePage.openLoginPopup();
+      await accountPanel.openLoginPopup();
       await signUpPopUp.signIn(defaultUser.email, defaultUser.password);
-      await homePage.cleanAllOrders();
+      await page.waitForLoadState();
       await use(homePage);
     },
 });
