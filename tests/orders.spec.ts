@@ -1,6 +1,7 @@
 import { test, expect, loggedInTest } from '../fixtures/basefixture';
 
 loggedInTest('place default order using login fixture', async ({ homePage, newMarketOrderPopUp }) => {
+  await homePage.cleanAllOrders();
   await homePage.openNewOrderPopUp();
   await newMarketOrderPopUp.placeOrder();
   await expect(homePage.positionCounterLabel).toHaveText("1");
